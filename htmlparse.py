@@ -17,7 +17,7 @@ def queryContent(url):
         #print allhtml
         titulo = soup.find_all("div", "one-titulo")[0].contents[0].strip() #VOL号
         imagen = soup.find_all("div", "one-imagen")[0].find("img")['src'].strip() #首页图片链接
-        imagen_leyenda = soup.find_all("div", "one-imagen-leyenda")[0].contents[0].strip() #图片标题
+        imagen_leyenda = "".join(unicode(item) for item in soup.find_all("div", "one-imagen-leyenda")[0].contents).strip() #图片标题
         cita = soup.find_all("div", "one-cita")[0].contents[0].strip() #文章内容
         cita_content=""
         cita_author=""
@@ -36,8 +36,10 @@ def queryContent(url):
         articulo_autor = soup.find_all("p","articulo-autor")[0].contents[0].strip() #文章作者
         articulo_contenido = soup.find_all("div","articulo-contenido")[0].contents #文章内容
         articulo_contenido ="".join(unicode(item) for item in  articulo_contenido)
-        articulo_editor = soup.find_all("p","articulo-editor")[0].contents[0].strip()#责任编辑
         
+        articulo_tmp = soup.find_all("p","articulo-editor")
+        articulo_editor = articulo_tmp[0].contents[0].strip() if len(articulo_tmp) > 0 else "" #责任编辑
+
         cuestion_title = soup.find_all("h4")[0].stripped_strings #问题-标题
         cuestion_title = ''.join(unicode(item) for item in  cuestion_title)
         cuestion_contenido = soup.find_all("div","cuestion-contenido") #问题-问
@@ -48,7 +50,8 @@ def queryContent(url):
 
         #print cuestion_contenians
 
-        cosas_imagen = soup.find_all("div", "cosas-imagen")[0].find("img")['src'].strip() #东西里面的图片链接
+        cosas_imagen_tmp = soup.find_all("div", "cosas-imagen")[0].find("img")
+        cosas_imagen = cosas_imagen_tmp['src'].strip() if cosas_imagen_tmp.get("src") else 'http://www.example.com' #东西里面的图片链接
         cosas_titulo = ''.join(unicode(item) for item in  soup.find_all("h2","cosas-titulo")[0].stripped_strings) #东西名
         cosas_contenido = soup.find_all("div","cosas-contenido")[0].stripped_strings #东西说明
         cosas_contenido = ''.join(unicode(item) for item in  cosas_contenido)
@@ -77,7 +80,6 @@ def queryContent(url):
             "cosas_titulo":cosas_titulo,
             "cosas_contenido":cosas_contenido
         }
-        #print(one_map)
         return one_map
     except Exception as e:
         #return traceback.format_exc()
@@ -86,4 +88,4 @@ def queryContent(url):
         return None
 
 if __name__ == "__main__":
-    queryContent(1111)
+    queryContent(sys.arvg[1])
