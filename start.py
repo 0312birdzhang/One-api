@@ -16,7 +16,7 @@ urls = (
 )
 class index:
     def GET(self):
-        return "欢迎使用一个API"
+        return "欢迎使用一个API，接口实例： http://one.birdzhang.xyz/query?vol=1111"
 
 class query:
     def GET(self):
