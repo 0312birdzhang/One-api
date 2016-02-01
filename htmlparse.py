@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import sys
 import urllib2
 import datetime
+import json
 
 def getHtml(date,type):
     i_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",\
@@ -42,8 +43,8 @@ def queryContent(date):
     comilla_cerrar = soup.find_all("p","text-lead")[0].contents[0].strip() #文章最上面的文字
     articulo_titulo = soup.find_all("p","text-title")[0].contents[0].strip() #文章标题
     articulo_autor = soup.find_all("p","text-author")[0].contents[0].strip() #文章作者
-    articulo_contenido = soup.find_all("div","text-content")[0].contents[0].strip() #文章内容
-    
+    articulo_contenido = soup.find_all("div","text-content")[0].stripped_strings #文章内容
+    articulo_contenido ="".join(unicode(item) for item in  articulo_contenido)
     articulo_tmp = soup.find_all("p","text-editor")
     articulo_editor = articulo_tmp[0].contents[0].strip() if len(articulo_tmp) > 0 else "" #责任编辑
 
@@ -51,10 +52,12 @@ def queryContent(date):
     allhtml = getHtml(date,"question")
     soup = BeautifulSoup(allhtml,"html.parser")
     cuestion_title = soup.find_all("p","text-title")[0].contents[0].strip() #问题-标题
-    cuestion_question = soup.find_all("div","text-content")[0].contents[1]#问题-问
-    cuestion_answerer = soup.find_all("p","text-title")[1].contents[0].strip() #问题-回答者
-    cuestion_contenians = soup.find_all("div","text-content")[1].contents[1] #问题-答
-    #print cuestion_contenians
+    cuestion_question = soup.find_all("div","text-content")[0].stripped_strings#问题-问
+    cuestion_question = ''.join(unicode(item) for item in  cuestion_question)
+    cuestion_answerer = soup.find_all("p","text-title")[1].stripped_strings #问题-回答者
+    cuestion_answerer = ''.join(unicode(item) for item in  cuestion_answerer)
+    cuestion_contenians = soup.find_all("div","text-content")[1].stripped_strings #问题-答
+    cuestion_contenians = ''.join(unicode(item) for item in  cuestion_contenians)
     
     #东西已经过期
 #     cosas_imagen_tmp = soup.find_all("div", "cosas-imagen")[0].find("img")
@@ -91,6 +94,7 @@ def queryContent(date):
         "cosas_contenido":cosas_contenido
     }
     #print one_map
+    print json.dumps(one_map,ensure_ascii=False,indent=2)
     return one_map
 
     

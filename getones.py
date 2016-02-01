@@ -26,8 +26,10 @@ def getTodayContent(day):
                 insertDatas(day,data)
                 return json.dumps(data,ensure_ascii=False,indent=2)
             else:
+                print e
                 return 'Error'
     except Exception as e:
+        print e
         return 'Error'
     conn.close()
 
@@ -36,7 +38,7 @@ def insertDatas(day,data):
     try:
         conn = sqlite3.connect("database.db")
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES (%s,'%s')" % (day,json.dumps(data) ) )
+        cur.execute("INSERT INTO datas VALUES ('%s','%s')" % (day,json.dumps(data) ) )
         conn.commit()
     except Exception as e:
         #pass
