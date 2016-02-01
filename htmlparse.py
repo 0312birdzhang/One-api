@@ -90,7 +90,7 @@ def queryContent(date):
         "cosas_titulo":cosas_titulo,
         "cosas_contenido":cosas_contenido
     }
-    print one_map
+    #print one_map
     return one_map
 
     

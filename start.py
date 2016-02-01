@@ -17,13 +17,13 @@ urls = (
 )
 class index:
     def GET(self):
-        return "欢迎使用一个API，接口实例： http://one.birdzhang.xyz/query?vol=1111"
+        return "欢迎使用一个API，接口实例： http://one.birdzhang.xyz/query?day=2016-02-01"
 
 class query:
     def GET(self):
         web.header('Content-Type', 'application/json')
-        i = web.input(vol=getTodayVol())
-        return getTodayContent(i.vol)
+        i = web.input(day="2016-02-01")
+        return getTodayContent(i.day)
  
 def getTodayVol():
        #new Date("2012-10-07 00:00:00").getTime();
