@@ -93,8 +93,6 @@ def queryContent(date):
         "cosas_titulo":cosas_titulo,
         "cosas_contenido":cosas_contenido
     }
-    #print one_map
-    print json.dumps(one_map,ensure_ascii=False,indent=2)
     return one_map
 
     
