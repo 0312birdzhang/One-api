@@ -14,7 +14,7 @@ def getTodayContent(day):
         cur = conn.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS datas
                  (day text, json text) ''')
-        cur.execute('SELECT json FROM datas WHERE day= %s ' % day)
+        cur.execute("SELECT json FROM datas WHERE day= '%s' " % day)
         result= cur.fetchone()
         #logging.debug(result)
         if result:

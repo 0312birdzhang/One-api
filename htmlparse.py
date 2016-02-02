@@ -93,10 +93,11 @@ def queryContent(date):
         "cosas_titulo":cosas_titulo,
         "cosas_contenido":cosas_contenido
     }
+    print one_map
     return one_map
 
     
 
 
 if __name__ == "__main__":
-    queryContent("2016-02-01")
+    queryContent("2016-02-03")

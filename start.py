@@ -22,7 +22,8 @@ class index:
 class query:
     def GET(self):
         web.header('Content-Type', 'application/json')
-        i = web.input(day="2016-02-01")
+        today = time.strftime("%Y-%m-%d", time.localtime())
+        i = web.input(day=today)
         return getTodayContent(i.day)
  
 def getTodayVol():
