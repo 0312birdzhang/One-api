@@ -8,7 +8,7 @@ Created on 2015年10月13日
 import sqlite3
 import json
 from htmlparse import queryContent 
-def getTodayContent(day):
+def getTodayContent(day,today):
     try:
         conn = sqlite3.connect("database.db")
         cur = conn.cursor()
@@ -22,8 +22,9 @@ def getTodayContent(day):
         else:
             data=queryContent(day)
             #插入
-            if data and data != "Timeout":
-                insertDatas(day,data)
+            if data and data != "Timeout" :
+                if day <= today:
+                    insertDatas(day,data)
                 return json.dumps(data,ensure_ascii=False,indent=2)
             else:
                 print e
@@ -41,8 +42,8 @@ def insertDatas(day,data):
         cur.execute("INSERT INTO datas VALUES ('%s','%s')" % (day,json.dumps(data) ) )
         conn.commit()
     except Exception as e:
-        #pass
-     conn.close()
+        pass
+    conn.close()
 
 
 

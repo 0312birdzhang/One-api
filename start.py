@@ -24,7 +24,7 @@ class query:
         web.header('Content-Type', 'application/json')
         today = time.strftime("%Y-%m-%d", time.localtime())
         i = web.input(day=today)
-        return getTodayContent(i.day)
+        return getTodayContent(i.day,today)
  
 def getTodayVol():
        #new Date("2012-10-07 00:00:00").getTime();
