@@ -8,6 +8,8 @@ Created on 2015年10月13日
 import sqlite3
 import json
 from htmlparse import queryContent 
+
+
 def getTodayContent(day,today):
     try:
         conn = sqlite3.connect("database.db")

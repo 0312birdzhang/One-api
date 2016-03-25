@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from bs4 import BeautifulSoup
+
 import sys
 import urllib2
 import datetime
@@ -17,7 +17,7 @@ def getHtml(api):
     try:
         response = urllib2.urlopen(req,timeout=30)
         allhtml = response.read()
-        return allhtml
+        return json.loads(allhtml.decode("utf-8"))
     except Exception as e:
         print(e)
 
@@ -31,7 +31,7 @@ def gettimedelta(date):
     
 def queryContent(date):
     
-    vindex = gettimedelta(date)
+    vindex = int(gettimedelta(date))
     #home page
     h_api = "hp/idlist/0"
     h_datas = getHtml(h_api)
@@ -107,4 +107,4 @@ def queryContent(date):
 
 
 if __name__ == "__main__":
-    queryContent("2016-02-03")
+    queryContent("2016-03-24")
