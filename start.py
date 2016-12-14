@@ -5,6 +5,9 @@ Created on 2015年10月14日
 
 @author: 0312birdzhang
 '''
+from gevent import monkey; monkey.patch_all()  
+from gevent.wsgi import WSGIServer  
+import gevent
 import web
 import time
 from getones import *
@@ -35,5 +38,5 @@ def getTodayVol():
        vol = (today - timeStamp)/60/60/24
        return vol
 if __name__ == "__main__":
-    app = web.application(urls, globals())
-    app.run()
+    application = web.application(urls, globals()).wsgifunc()
+    WSGIServer(('', 9998), application).serve_forever()
